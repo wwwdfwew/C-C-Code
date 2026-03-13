@@ -6,6 +6,7 @@ namespace space
 {
 	class string
 	{
+		const static size_t npos;
 		typedef char* lterator;
 		////有参构造函数
 		//string(const char* s)
@@ -87,9 +88,91 @@ namespace space
 			_size += len;
 			_str[_size] = '\0';
 		}
+
+		void insert(size_t pos, size_t n, char ch)//在pos位置插入n个ch
+		{
+			size_t end = _size;
+			if (_size + n > _capacity)
+			{
+				reserve((_size + n) * 2);
+			}
+
+			if (end >= pos&&end!=npos)
+			{
+				_str[end + n] = _str[end];
+				end--;
+			}
+
+			for (size_t i = 0; i < n; i++)
+			{
+				_str[pos + i] = ch;
+			}
+			_size += n;
+		}
+
+		void insert(size_t pos, const char* str)
+		{
+			size_t end = _size;
+			size_t len = strlen(str);
+			if (_size + len > _capacity)
+			{
+				reserve((_size + len) * 2);
+			}
+			if (end >= pos && end != npos)
+			{
+				_str[end + len] = _str[end];
+				end--;
+			}
+			for (size_t i = 0; i < len; i++)
+			{
+				_str[pos++] = str[len++];
+			}
+			_size += len;
+		}
+
+		void erase(size_t pos, size_t len = npos)
+		{
+			if (len == npos || len > _size - pos)
+			{
+				_str[pos] = '\0';
+			}
+			else
+			{
+				size_t end = pos + len;
+				while (end <= _size)
+				{
+					_str[pos++] = _str[end++];
+				}
+			}
+			_size = pos;
+		}
+		size_t find(char ch,size_t pos)
+		{
+			for (size_t i = pos; i < _size; i++)
+			{
+				if (_str[i] == ch)
+					return i;
+				else
+					return npos;
+			}
+		}
+
+		size_t find(const char* str, size_t pos)
+		{
+			const char* ptr = strstr(_str + pos, str);
+			if (ptr)
+			{
+				return ptr - _str;
+			}
+			else
+			{
+				return npos;
+			}
+		}
 	private:
 		char* _str;
 		size_t _size;
 		size_t _capacity;
 	};
+	const static size_t npos = -1;
 }
