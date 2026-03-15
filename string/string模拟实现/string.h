@@ -27,7 +27,7 @@ namespace space
 		//}
 		//可以是上面两者的结合
 		string(const char* s="")
-			:_str(new char[strlen(s)])
+			:_str(new char[strlen(s)+1])
 			, _size(strlen(s))
 			, _capacity(_size)
 		{
@@ -77,7 +77,7 @@ namespace space
 			{
 				reserve(_capacity * 2);
 			}
-			_str[_size] = 'ch';
+			_str[_size] = ch;
 			_size += 1;
 			_str[_size + 1] = '\0';
 		}

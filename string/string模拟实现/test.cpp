@@ -38,15 +38,15 @@ void test_string2()
 			protocol = s.substr(0, pos1);//从零开始拷贝pos1长度(也就是https的长度)字符给protocol
 		}
 		cout << protocol.c_str() << endl;
-		//size_t pos2 = s.find('/', (pos1 + 3));//从'l'位置开始找到/所在位置
-		//space::string domain;//域名
-		//if (pos2 != s.npos)
-		//{
-		//	domain = s.substr((pos1 + 3), (pos2 - pos1 - 3));//拷贝域名
-		//}
-		//cout << domain.c_str() << endl;
-		//space::string uri = s.substr(pos2 + 1);//拷贝资源，这里直接不给长度，默认是npos，就直接将后面的字符全部拷贝了
-		//cout << uri.c_str() << endl;
+		size_t pos2 = s.find('/', (pos1 + 3));//从'l'位置开始找到/所在位置
+		space::string domain;//域名
+		if (pos2 != s.npos)
+		{
+			domain = s.substr((pos1 + 3), (pos2 - pos1 - 3));//拷贝域名
+		}
+		cout << domain.c_str() << endl;
+		space::string uri = s.substr(pos2 + 1);//拷贝资源，这里直接不给长度，默认是npos，就直接将后面的字符全部拷贝了
+		cout << uri.c_str() << endl;
 }
 
 int main()
