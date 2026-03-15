@@ -6,7 +6,8 @@ namespace space
 {
 	class string
 	{
-		const static size_t npos;
+	public:
+		 const static size_t npos;
 		typedef char* lterator;
 		////有参构造函数
 		//string(const char* s)
@@ -60,11 +61,14 @@ namespace space
 
 		void reserve(size_t n)
 		{
-			char* tmp = new char[n + 1];
-			strcpy(tmp, _str);
-			delete[] _str;//这里销毁的是_str指向的那个动态开辟的空间，并不是_str这个空间
-			_str = tmp;
-			_capacity += n + 1;
+			if (n > _capacity)
+			{
+				char* tmp = new char[n + 1];
+				strcpy(tmp, _str);
+				delete[] _str;
+				_str = tmp;
+				_capacity = n;
+			}
 		}
 
 		void push_back(char ch)
@@ -152,9 +156,8 @@ namespace space
 			{
 				if (_str[i] == ch)
 					return i;
-				else
-					return npos;
 			}
+			return npos;
 		}
 
 		size_t find(const char* str, size_t pos)
@@ -169,10 +172,37 @@ namespace space
 				return npos;
 			}
 		}
+
+		string substr(size_t pos, size_t len = npos)
+		{
+			size_t n = len;
+			if ( len == npos || pos + len > _size)
+			{
+				n = _size - pos;
+			}
+			string tmp;
+			tmp.reserve(n);
+			for (size_t i = pos;i < (n + pos);i++)
+			{
+				tmp.push_back(_str[i]);
+			}
+
+			return tmp;
+		}
+
+
+		string(const string& s)
+		{
+			_str = new char[s._capacity + 1];
+			strcpy(_str, s._str);
+			_size = s._size;
+			_capacity = s._capacity;
+
+		}
 	private:
 		char* _str;
 		size_t _size;
 		size_t _capacity;
 	};
-	const static size_t npos = -1;
+	const size_t string:: npos = -1;
 }
