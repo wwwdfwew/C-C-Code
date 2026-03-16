@@ -1,6 +1,7 @@
 #pragma once
 
-#include<iostream>
+//#include<iostream>
+
 
 namespace space
 {
@@ -11,7 +12,7 @@ namespace space
 		typedef char* lterator;
 		////有参构造函数
 		//string(const char* s)
-		//	:_str(new char[strlen(s)])
+		//	:_str(new char[strlen(s)+1])
 		//	, _size(strlen(s))
 		//	, _capacity(_size)
 		//{
@@ -27,10 +28,10 @@ namespace space
 		//}
 		//可以是上面两者的结合
 		string(const char* s="")
-			:_str(new char[strlen(s)+1])
-			, _size(strlen(s))
-			, _capacity(_size)
 		{
+			_size=strlen(s);
+			_capacity=_size + 1;
+			_str = new char[_capacity + 1];
 			strcpy(_str, s);
 		}
 
@@ -44,17 +45,17 @@ namespace space
 			return _size;
 		}
 
-		char& operator[](size_t pos)
+		const char& operator[](size_t pos)const
 		{
 			return _str[pos];
 		}
 
-		lterator begin()
+		const lterator begin()const
 		{
 			return _str;
 		}
 
-		lterator end()
+		const lterator end()const
 		{
 			return _str + _size;
 		}
@@ -63,6 +64,7 @@ namespace space
 		{
 			if (n > _capacity)
 			{
+				std::cout << "reserve->" << n << std::endl;
 				char* tmp = new char[n + 1];
 				strcpy(tmp, _str);
 				delete[] _str;
@@ -75,24 +77,35 @@ namespace space
 		{
 			if (_size == _capacity)
 			{
-				reserve(_capacity * 2);
+				reserve(_capacity == 0 ? 4 : _capacity * 2);//这是因为可能字符串为空，所以长度为0,容量也为0
 			}
 			_str[_size] = ch;
-			_size += 1;
-			_str[_size + 1] = '\0';
+			_size++;
+			_str[_size] = '\0';
 		}
 		void append(const char* str)
 		{
 			size_t len = strlen(str);
 			if ((_size + len) > _capacity)
 			{
-				reserve(_capacity == 0?4: _capacity * 2);//这是因为可能字符串为空，所以长度为0,容量也为0
+				reserve(_size+len);
 			}
 			strcpy(_str + _size, str);
 			_size += len;
 			_str[_size] = '\0';
 		}
 
+		string& operator+=(char ch)
+		{
+			push_back(ch);
+			return *this;
+		}
+
+		string& operator+=(const char* str)
+		{
+			append(str);
+			return *this;
+		}
 		void insert(size_t pos, size_t n, char ch)//在pos位置插入n个ch
 		{
 			size_t end = _size;
@@ -101,7 +114,7 @@ namespace space
 				reserve((_size + n) * 2);
 			}
 
-			if (end >= pos&&end!=npos)
+			while (end!= npos&&end >= pos)
 			{
 				_str[end + n] = _str[end];
 				end--;
@@ -122,14 +135,14 @@ namespace space
 			{
 				reserve((_size + len) * 2);
 			}
-			if (end >= pos && end != npos)
+			while (end != npos&&end >= pos)
 			{
 				_str[end + len] = _str[end];
 				end--;
 			}
 			for (size_t i = 0; i < len; i++)
 			{
-				_str[pos++] = str[len++];
+				_str[pos++] = str[i];
 			}
 			_size += len;
 		}
@@ -199,10 +212,109 @@ namespace space
 			_capacity = s._capacity;
 
 		}
+		
+		void resize(size_t n, char ch = '\0')
+		{
+			if (n < _size)
+			{
+				_str[n] = '\0';
+			}
+			else
+			{
+				reserve(n);
+				for (size_t i = _size; i < n; i++)
+				{
+					_str[i] = ch;
+				}
+				_str[n] = '\0';
+			}
+		}
+		void clear()
+		{
+			_str[0] = '\0';
+			_size = 0;
+		}
+
+
 	private:
 		char* _str;
 		size_t _size;
 		size_t _capacity;
 	};
+
+	/*ostream& operator<<(ostream& out, const string& s)
+	{
+		
+		for (auto ch : s)
+		{
+			out << s;
+		}
+		return out;
+	}*/
+
+std::ostream& operator<< (std::ostream& out, const string& s)
+	{
+		/*for (size_t i = 0; i < s.size(); i++)
+		{
+			out << s[i];
+		}*/
+
+		for (auto ch : s)
+		{
+			out << ch;
+		}
+
+		return out;
+	}
+
+	std::istream& operator>>(std::istream& in,  string& s)
+	{
+		s.clear();
+		char ch = in.get();//将空格和换行符也读取
+		while (ch == ' ' || ch == '\n')//清理空格和换行符
+		{
+			ch = in.get();
+		}
+
+		//开辟一个char类型的数组，当空间满了或者遇到空格/换行符时才进行添加
+		//这样可以减少扩容次数
+		char buff[128];
+		size_t i = 0;
+		while (ch != ' ' && ch != '\n')
+		{
+			buff[i++] = ch;
+			if (i == 127)//当空间满时添加
+			{
+				buff[127] = '\0';
+				s += buff;
+				i = 0;
+			}
+			ch = in.get();
+		}
+		if (i != 0)//遇到空格或者换行符时添加
+		{
+			buff[i] = '\0';
+			s += buff;
+		}
+		return in;
+	}
+
+
+//std::istream& operator>>(std::istream& in, string& s)
+//{
+//	s.clear();
+//	char ch = in.get();
+//	while (ch == ' ' || ch == '\n')//清理空格和换行符
+//	{
+//		ch = in.get();
+//	}
+//	while (ch != ' ' && ch != '\n')
+//	{
+//		s += ch;
+//		ch = in.get();
+//	}
+//	return in;
+//
+//}
 	const size_t string:: npos = -1;
 }
