@@ -74,16 +74,39 @@ using namespace std;
 //	cout << s << endl;*/
 //}
 
-void test_string5()
+//void test_string5()
+//{
+//	space::string s;
+//	cin >> s;
+//	cout << s << endl;
+//	cin >> s;
+//	cout << s << endl;
+//}
+
+//void test_string6()
+//{
+//	/*space::string s1("hello world");
+//	space::string s2;
+//	s2 = s1;
+//	cout << s1 << endl;
+//	cout << s2 << endl;*/
+//
+//	space::string s1("hello world");
+//	space::string s2("xxxxxxxxxxxxxxxxxx");
+//	s1 = s2;
+//	cout << s1 << endl;
+//	cout << s2 << endl;
+//
+//}
+
+void test_string7()
 {
-	space::string s;
-	cin >> s;
-	cout << s << endl;
-	cin >> s;
-	cout << s << endl;
+	space::string s1("hello");
+	space::string s2("helloyyy");
+	cout << (s1 < s2) << endl;
 }
 int main()
 {
-	test_string5();
+	test_string7();
 	return 0;
 }

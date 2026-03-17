@@ -34,7 +34,10 @@ namespace space
 			_str = new char[_capacity + 1];
 			strcpy(_str, s);
 		}
+		~string()
+		{
 
+		}
 		char* c_str()
 		{
 			return _str;
@@ -234,8 +237,46 @@ namespace space
 			_str[0] = '\0';
 			_size = 0;
 		}
+		void swap(string& s)
+		{
+			std::swap(_str, s._str);
+			std::swap(_size, s._size);
+			std::swap(_capacity, s._capacity);
+		}
 
+		//string& operator=(const string& s)
+		//{
+		//	char* tmp = new char[s._capacity + 1];
+		//	memcpy(tmp, s._str, s._size + 1);
+		//	delete _str;
+		//	_str = tmp;
+		//	_size = s._size;
+		//	_capacity = s._capacity;
+		//	return *this;
+		//}
 
+		/*string& operator=(string& s)
+		{
+			string tmp(s);
+			std::swap(tmp._str, s._str);
+			std::swap(tmp._size, s._size);
+			std::swap(tmp._capacity, s._capacity);
+			return *this;
+		}*/
+		string& operator=(string tmp)
+		{
+			
+			swap(tmp);
+			return *this;
+		}
+
+		bool operator<(const string& s)const
+		{
+			int ret = memcmp(_str, s._str, _size < s._size ? _size : s._size);
+			return ret == 0 ? _size < s._size : ret < 0;
+		}
+		
+	
 	private:
 		char* _str;
 		size_t _size;
