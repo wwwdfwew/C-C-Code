@@ -207,7 +207,7 @@ namespace space
 		}
 
 
-		string(const string& s)
+		/*string(const string& s)
 		{
 			_str = new char[s._capacity + 1];
 			strcpy(_str, s._str);
@@ -215,7 +215,18 @@ namespace space
 			_capacity = s._capacity;
 
 		}
-		
+		*/
+
+
+		string(const string& s)
+			:_str(nullptr)
+			,_size(0)
+			,_capacity(1)
+		{
+			string tmp(s._str);
+			swap(tmp);
+		}
+
 		void resize(size_t n, char ch = '\0')
 		{
 			if (n < _size)

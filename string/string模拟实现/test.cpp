@@ -83,30 +83,43 @@ using namespace std;
 //	cout << s << endl;
 //}
 
-//void test_string6()
-//{
-//	/*space::string s1("hello world");
-//	space::string s2;
-//	s2 = s1;
-//	cout << s1 << endl;
-//	cout << s2 << endl;*/
-//
-//	space::string s1("hello world");
-//	space::string s2("xxxxxxxxxxxxxxxxxx");
-//	s1 = s2;
-//	cout << s1 << endl;
-//	cout << s2 << endl;
-//
-//}
-
-void test_string7()
+void test_string6()
 {
+	/*space::string s1("hello world");
+	space::string s2;
+	s2 = s1;
+	cout << s1 << endl;
+	cout << s2 << endl;*/
+	//space::string s1("hello world");
+	//space::string s2(s1);
+	////space::string s1("hello world");
+	//space::string s3("xxxxxxxxxxxxxxxxxx");
+	//s1 = s3;
+	//cout << s1 << endl;
+	//cout << s3 << endl;
+
+
 	space::string s1("hello");
-	space::string s2("helloyyy");
-	cout << (s1 < s2) << endl;
+	space::string s2(s1);
+
+	cout << s1 << endl;
+	cout << s2 << endl;
+
+	space::string s3("xxxxxxxxxxxxx");
+	s1 = s3;
+
+	cout << s1 << endl;
+	cout << s3 << endl;
 }
+
+//void test_string7()
+//{
+//	space::string s1("hello");
+//	space::string s2("helloyyy");
+//	cout << (s1 < s2) << endl;
+//}
 int main()
 {
-	test_string7();
+	test_string6();
 	return 0;
 }
