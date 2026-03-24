@@ -68,7 +68,29 @@ namespace space
 				_end_of_storage =_start + n;
 		}
 
+		iterator insert(iterator it, const T& val)
+		{
+			if (it >= _start && it <= _finish)
+			{
+				if (_finish == _end_of_storage)
+				{
+					size_t len = it - _start;//记录迭代器和新空间_start的相对位置
+					reserve(capacity() == 0 ? 4 : capacity() * 2);
 
+
+					it = len + _start;//得到新空间迭代器的位置
+				}
+				iterator end = _finish;
+				while (end != it)
+				{
+					*end = *(end-1);
+					end--;
+				}
+				*it = val;
+				++_finish;
+			}
+			return it;
+		}
 	private:
 		iterator _start;
 		iterator _finish;
