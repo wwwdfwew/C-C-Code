@@ -15,6 +15,23 @@ namespace space
 
 		}
 
+		vector(size_t n, const T& val = T())
+		{
+			resize(n, val);
+
+		}
+
+
+		template<class InputIterator>
+		vector(InputIterator first, InputIterator last)
+		{
+			while (first != last)
+			{
+				push_back(*first);
+				++first;
+			}
+		}
+
 		~vector()
 		{
 			if (_start)
@@ -24,6 +41,17 @@ namespace space
 			}
 		}
 
+		vector(const vector<T>& v)
+			:_start(nullptr)
+			,_finish(nullptr)
+			,_end_of_storage(nullptr)
+		{
+			reserve(v._end_of_storage);
+			for (auto e : v)
+			{
+				push_back(e);
+			}
+		}
 		iterator begin()
 		{
 			return _start;
@@ -59,13 +87,35 @@ namespace space
 				T* tmp = new T[n];
 				if (_start)
 				{
-					memcpy(tmp, _start, sizeof(T) * sz);
+					//memcpy(tmp, _start, sizeof(T) * sz);
+					for (size_t i = 0; i < sz; i++)
+					{
+						tmp[i] = _start[i];
+					}
 					delete[] _start;
 				}
 				
 				_start = tmp;
 				_finish = sz + _start;
 				_end_of_storage =_start + n;
+		}
+
+		void resize(size_t n, const T& val = T())
+		{
+			if (n < size())
+			{
+				_finish = _start + n;
+			}
+			else
+			{
+				reserve(n);
+
+				while (_finish != _start + n)
+				{
+					*_finish = val;
+					++_finish;
+				}
+			}
 		}
 
 		iterator insert(iterator it, const T& val)
@@ -90,6 +140,21 @@ namespace space
 				++_finish;
 			}
 			return it;
+		}
+
+		iterator erase(iterator pos)
+		{
+			assert(pos >= _start && pos < _finish);
+			
+			iterator it = pos;
+				while (it!= _finish - 1)
+				{
+					*it = *(it + 1);
+					it++;
+				}
+				_finish--;
+			
+			return pos;
 		}
 	private:
 		iterator _start;

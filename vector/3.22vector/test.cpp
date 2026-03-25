@@ -19,12 +19,12 @@ using namespace std;
 
 void test_vector2()
 {
-	space::vector<int> v;
+	/*space::vector<int> v;
 		v.push_back(1);
 		v.push_back(2);
 		v.push_back(3);
 		v.push_back(4);
-		
+		v.push_back(5);
 		for (auto e : v)
 		{
 			cout << e << " ";
@@ -38,6 +38,44 @@ void test_vector2()
 			cout << e << " ";
 		}
 		cout << endl;
+
+		v.erase(v.begin() + 3);
+		for (auto e : v)
+		{
+			cout << e << " ";
+		}
+		cout << endl;*/
+
+	/*	space::vector<int> v;
+			v.push_back(1);
+			v.push_back(2);
+			v.push_back(3);
+			v.push_back(4);
+			v.push_back(5);
+			for (auto e : v)
+			{
+				cout << e << " ";
+			}
+			cout << endl;
+			space::vector<int>::iterator it = v.begin();
+		
+			v.erase(v.begin() + 2);
+			for (auto e : v)
+			{
+				cout << e << " ";
+			}
+			cout << endl;*/
+	space::vector<string> v;
+	v.push_back("111111");
+	v.push_back("222222");
+	v.push_back("333333");
+	v.push_back("444444");
+	v.push_back("555555");
+	for (auto e : v)
+	{
+		cout << e << " ";
+	}
+	cout << endl; 
 }
 int main()
 {
