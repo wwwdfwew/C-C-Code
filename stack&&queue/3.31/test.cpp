@@ -1,17 +1,34 @@
 #include<iostream>
-#include<vector>
-#include<list>
-#include<stack>
-#include <queue>
-using namespace std;
+//#include<vector>
+//#include<list>
+//#include<stack>
+//#include <queue>
 
 #include"stcak.h"
-#include"queue.h"
+//#include"queue.h"
+using namespace std;
+//
+//#include"stcak.h"
+//#include"queue.h"
 
 
 int main()
 {
 	/*space::stack<int, vector<int>> st;
+	st.push(1);
+	st.push(2);
+	st.push(3);
+	st.push(4);
+	st.push(5);
+	while (!st.empty())
+	{
+		cout << st.top() << " ";
+		st.pop();
+	}
+	cout << endl;*/
+
+
+	/*stack<int, vector<int>> st;
 	st.push(1);
 	st.push(2);
 	st.push(3);
@@ -37,7 +54,7 @@ int main()
 	}
 	cout << endl;*/
 
-	space::queue<int, list<int>> q;
+	/*space::queue<int, list<int>> q;
 	q.push(1);
 	q.push(2);
 	q.push(3);
@@ -48,6 +65,8 @@ int main()
 		cout << q.front() << " ";
 		q.pop();
 	}
-	cout << endl;
+	cout << endl;*/
+
+	space::test_stack();
 	return 0;
 }
