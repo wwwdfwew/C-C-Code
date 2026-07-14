@@ -147,5 +147,6 @@ int main()
 			}
 		}
 		//在Linux环境下，相同的代码，扩容的规律不同。
+		//reserve()
 	return 0;
 }
