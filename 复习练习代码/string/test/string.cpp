@@ -21,7 +21,7 @@ int main()
 ////1.重载operator[]:用于自定义类型对象通过下标访问数据*/
 	string s("hello world");
 	cout << s[2] << endl;
-//////2.重载operator[]可以修改值，用户和数组类似
+//////2.重载operator[]可以修改值，因为它返回的是访问元素的引用。它的用法和数组相似。
 	s[2] = 'o';
 	cout << s << endl;
 ///////3.要区分数组的[]加下标的原理和自定义类型对象的[]加下标的原理
@@ -124,5 +124,28 @@ int main()
 			}
 		}*/
 		Pget("hello world");
+
+		//string中的方法：
+
+		//size():计算数组中数据的个数，不包括/0
+		//length():和size的功能一样
+		//capacity()计算数组的大小，容量，不一定等于size()。
+		//扩容，编译环境不同，扩容规则也可能不同
+		string s7("hello world");
+		cout << s7.size() << endl;
+		cout << s7.length() << endl;
+		cout << s7.capacity() << endl;
+		//扩容：
+		size_t old = s7.capacity();
+		for (int i = 0; i <= 100; i++)
+		{
+			s7 += 'x';
+			if (old != s7.capacity())
+			{
+				cout << "s7.capacity():" << old << endl;
+				old = s7.capacity();
+			}
+		}
+		//在Linux环境下，相同的代码，扩容的规律不同。
 	return 0;
 }
